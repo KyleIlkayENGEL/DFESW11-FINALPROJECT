@@ -22,7 +22,7 @@ public class ReaderService {
     readerRepository.save(reader);
   }
 
-  private Reader getReaderById(Long id) {
+  public Reader getReaderById(Long id) {
     log.info("Method getReaderById started for id: {}", id);
     return readerRepository
         .findById(id)

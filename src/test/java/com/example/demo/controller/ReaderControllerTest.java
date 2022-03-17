@@ -33,7 +33,7 @@ public class ReaderControllerTest {
 
     readerController.addReader(readerDto);
 
-    verify(readerService).addReader(reader);
+    verify(readerService).addReader(readerDto);
   }
 
   @Test

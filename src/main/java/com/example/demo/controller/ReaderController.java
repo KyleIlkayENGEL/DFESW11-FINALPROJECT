@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.domain.Reader;
 import com.example.demo.dto.ReaderDto;
 import com.example.demo.service.ReaderService;
 import com.sun.istack.NotNull;
@@ -24,14 +25,12 @@ public class ReaderController {
     @GetMapping(path = "/{id}")
     public ResponseEntity<ReaderDto> getReaderById(
             @NotNull @PathVariable("id") Long id) {
-        log.info("Received a call to get reader by id for id: {}.", id);
         return ok().body(readerService.getReader(id));
     }
 
     @PostMapping(produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> addReader(@RequestBody ReaderDto readerDto) {
-        log.info("Received a call to add reader.");
-        readerService.addReader(readerDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<Reader> addReader(@RequestBody ReaderDto readerDto) {
+      Reader reader =  readerService.addReader(readerDto);
+      return  ok().body(reader);
     }
 }

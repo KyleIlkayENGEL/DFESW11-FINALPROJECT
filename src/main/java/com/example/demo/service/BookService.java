@@ -24,14 +24,14 @@ public class BookService {
     bookRepository.save(book);
   }
 
-  public void addBookDto(BookDto bookDto) {
+  public Book addBookDto(BookDto bookDto) {
     log.info("Method addBook started.");
     Book book = new Book();
     book.setAuthor(bookDto.getAuthor());
     book.setTitle(bookDto.getTitle());
     book.setPublicationYear(bookDto.getPublicationYear());
 
-    bookRepository.save(book);
+   return bookRepository.save(book);
   }
 
   public Book getBookById(Long id) {

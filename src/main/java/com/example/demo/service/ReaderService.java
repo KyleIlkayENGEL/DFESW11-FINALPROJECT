@@ -14,33 +14,33 @@ import javax.persistence.EntityNotFoundException;
 @Slf4j
 public class ReaderService {
 
-  @Autowired
-  private ReaderRepository readerRepository;
+    @Autowired
+    private ReaderRepository readerRepository;
 
-  public void addReader(Reader reader) {
-    log.info("Method addReader started.");
-    readerRepository.save(reader);
-  }
+    public void addReader(Reader reader) {
+        log.info("Method addReader started.");
+        readerRepository.save(reader);
+    }
 
-  public Reader getReaderById(Long id) {
-    log.info("Method getReaderById started for id: {}", id);
-    return readerRepository
-        .findById(id)
-        .orElseThrow(() -> new EntityNotFoundException("Reader not found"));
-  }
+    public Reader getReaderById(Long id) {
+        log.info("Method getReaderById started for id: {}", id);
+        return readerRepository
+                .findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Reader not found"));
+    }
 
-  public ReaderDto getReader(Long id) {
-    Reader reader = getReaderById(id);
-    ReaderDto readerDto  = new ReaderDto();
-    readerDto.setName(reader.getName());
-    readerDto.setLastName(reader.getLastName());
-    return readerDto;
-  }
+    public ReaderDto getReader(Long id) {
+        Reader reader = getReaderById(id);
+        ReaderDto readerDto = new ReaderDto();
+        readerDto.setName(reader.getName());
+        readerDto.setLastName(reader.getLastName());
+        return readerDto;
+    }
 
-  public void addReader(ReaderDto readerDto) {
-    Reader reader = new Reader();
-    reader.setName(readerDto.getName());
-    reader.setLastName(readerDto.getLastName());
-    readerRepository.save(reader);
-  }
+    public Reader addReader(ReaderDto readerDto) {
+        Reader reader = new Reader();
+        reader.setName(readerDto.getName());
+        reader.setLastName(readerDto.getLastName());
+        return readerRepository.save(reader);
+    }
 }

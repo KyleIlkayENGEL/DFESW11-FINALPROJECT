@@ -3,9 +3,9 @@ package com.example.demo.controller;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.ResponseEntity.ok;
 
+import com.example.demo.domain.Book;
 import com.example.demo.dto.BookDto;
 import com.example.demo.service.BookService;
-import io.swagger.annotations.ApiParam;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -35,30 +35,26 @@ public class BookController {
   private BookService bookService;
 
   @PostMapping(produces = APPLICATION_JSON_VALUE)
-  public ResponseEntity<Void> addBook(@RequestBody @Valid BookDto bookDto) {
-    log.info("Received a call to add book.");
-    bookService.addBookDto(bookDto);
-    return new ResponseEntity<>(HttpStatus.CREATED);
+  public ResponseEntity<Book> addBook(@RequestBody @Valid BookDto bookDto) {
+   Book book =  bookService.addBookDto(bookDto);
+   return  ok().body(book);
   }
 
   @GetMapping(path = "/{id}")
   public ResponseEntity<BookDto> getBookById(
-      @NotNull @ApiParam(required = true) @PathVariable("id") Long id) {
-    log.info("Received a call to get book by id for id: {}.", id);
+      @NotNull @PathVariable("id") Long id) {
     return ok().body(bookService.getBookDtoById(id));
   }
 
   @GetMapping(path = "/byTitle", produces = APPLICATION_JSON_VALUE)
   public ResponseEntity<List<BookDto>> getBookByTitle(
       @NotNull @NotBlank @RequestParam String title) {
-    log.info("Received a call to get book by title for title: {}.", title);
     return ok().body(bookService.getBookByTitle(title));
   }
 
   @GetMapping(path = "/byAuthor", produces = APPLICATION_JSON_VALUE)
   public ResponseEntity<List<BookDto>> getBookByAuthor(
       @NotNull @NotBlank @RequestParam String author) {
-    log.info("Received a call to get book by author for author: {}.", author);
     return ok().body(bookService.getBookByAuthor(author));
   }
 }
